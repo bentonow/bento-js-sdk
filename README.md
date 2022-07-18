@@ -95,9 +95,13 @@ If you have identified the device _at least once_ during the session you can fet
 bento.getEmail()
 ```
 
-## Autofill
+## [DEPRECATED] Autofill
 
 This fetches the visitors details (email and whitelisted fields) and automatically fills out all forms on the page.
+
+```js
+bento.autofill();
+```
 
 ## [BETA] Track Subdomains
 
