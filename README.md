@@ -27,7 +27,7 @@ Loads Bento.js and fires off an event (`bento:ready`) that you can listen for.
 window.addEventListener("bento:ready", function () {
   if (typeof(bento$) != 'undefined') {
     bento$(function() {
-        bento.showChat();
+        // bento.showChat();
         bento.view();
     });
   }
