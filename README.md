@@ -56,7 +56,7 @@ bento.updateFields({"first_name": "Ash", "last_name": "Ketchum"});
 
 This will send their fields inside the event and update the visitor.
 
-## Track
+## Track (Events)
 
 The following will build an event with a custom type/name and a details payload that you can filter by in Workflows. 
 
@@ -64,6 +64,32 @@ The following will build an event with a custom type/name and a details payload 
 bento.track("optin", {"source": "test"});
 bento.track("demo");
 bento.track("download");
+```
+
+## Track Purchase (Unique Events)
+
+The following will track a purchase and increase/decrease the LTV of a customer.
+
+```js
+bento.track("purchase", {
+  unique: {
+    key: "INV1234", // a unique key — this stops duplicate unique events
+  },
+  value: {
+    currency: "USD",
+    amount: 1000, // in cents
+  },
+  cart: {
+    items: [ // an array of items, can be any format
+      {
+        product_name: "Product 1",
+        product_id: "1234",
+        quantity: 1,
+        price: 1000,
+      },
+    ],
+  },
+});
 ```
 
 ## Tag
