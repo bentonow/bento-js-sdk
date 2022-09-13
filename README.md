@@ -56,7 +56,7 @@ bento.updateFields({"first_name": "Ash", "last_name": "Ketchum"});
 
 This will send their fields inside the event and update the visitor.
 
-## Track (Events)
+## Track (Create Event)
 
 The following will build an event with a custom type/name and a details payload that you can filter by in Workflows. 
 
@@ -66,9 +66,9 @@ bento.track("demo");
 bento.track("download");
 ```
 
-## Track Purchase (Unique Events)
+## Track Purchase (Create Unique Events)
 
-The following will track a purchase and increase/decrease the LTV of a customer.
+The following will track a purchase and increase/decrease the LTV of a customer. Note that the `key` stops duplicate values being tracked, this is important if you're loading this script on a thank you page and it loads multiple times. Cool, huh?
 
 ```js
 bento.track("purchase", {
