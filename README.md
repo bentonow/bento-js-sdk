@@ -61,7 +61,7 @@ This will send their fields inside the event and update the visitor.
 The following will build an event with a custom type/name and a details payload that you can filter by in Workflows. 
 
 ```js
-bento.track("optin", {"source": "test"});
+bento.track("optin", {"organisation_name": "Team Rocket"});
 bento.track("demo");
 bento.track("download");
 ```
