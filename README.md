@@ -121,6 +121,14 @@ If you have identified the device _at least once_ during the session you can fet
 bento.getEmail()
 ```
 
+## Spam Check
+
+Got an important piece of content behind an opt-in and don't want your users putting fake emails in to get it? Leverage Bento's Spam API to ensure their email is correct before proceeding. NOTE: This _does not_ check MX records as that _can_ be super slow. 
+
+```js
+await bento.spamCheck(email)
+```
+
 ## [DEPRECATED] Autofill
 
 This fetches the visitors details (email and whitelisted fields) and automatically fills out all forms on the page.
