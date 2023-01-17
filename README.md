@@ -46,6 +46,21 @@ bento.identify("example@example.com");
 
 After you do so, all future events sent from this users device will be correctly identified as that person. Worth mentioning that all previous events sent from that visitors device will also be associated to that user. Magic, right?
 
+# Identify (Chat Only)
+
+In Bento, if you wish to identify a user in chat (not requiring self-identification) then you can use the following method. It requires both an email AND an identifier (like a user_id or account_id in your database).
+
+```js
+window.addEventListener('bentochat:ready', function() {
+    window.$bentoChat.setUser('<identifier>', {
+        email: '<email>',
+        name: 'Jane Doe',
+        phone_number: ''
+    });
+    console.log('running this')
+})
+```
+
 ## Update Fields
 
 If you'd like to update a visitors custom field (first_name, last_name, status, etc) run the following command _before_ you track an event or pageview.
