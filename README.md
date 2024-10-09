@@ -1,101 +1,127 @@
-# Bento Javascript SDK
+<p align="center"><img src="/art/bento-javascript-sdk.png" alt="Bento Javascript SDK"></p>
+
 [![Build Status](https://travis-ci.org/bentonow/bento-ruby-sdk.svg?branch=master)](https://travis-ci.org/bentonow/bento-ruby-sdk)
 
-🍱 Simple, powerful analytics for web projects!
+> [!TIP]
+> Need help? Join our [Discord](https://discord.gg/ssXXFRmt5F) or email jesse@bentonow.com for personalized support.
 
-Track events, update data, record LTV and more in Javascript. Data is stored in your Bento account so you can easily research and investigate what's going on.
+The Bento JavaScript SDK makes it quick and easy to build an excellent analytics experience in your web application. We provide powerful and customizable APIs that can be used out-of-the-box to track your users' behavior, manage subscribers, and integrate chat functionality. We also expose low-level APIs so that you can build fully custom experiences.
 
-👋 To get personalized support, please tweet @bento or email jesse@bentonow.com!
+Get started with our [📚 integration guides](https://docs.bentonow.com), or [📘 browse the SDK reference](https://docs.bentonow.com/subscribers).
 
-🐶 Battle-tested on Bento Production!
+Table of contents
+=================
 
-## Installation
+<!--ts-->
+* [Features](#features)
+* [Requirements](#requirements)
+* [Getting started](#getting-started)
+    * [Installation](#installation)
+* [Modules](#modules)
+* [Things to Know](#things-to-know)
+* [Contributing](#contributing)
+* [License](#license)
+<!--te-->
 
-When you sign up to Bento, you'll be able to copy and paste an `Embed Script`. There are two versions, please pick just one and add it to the header or footer of your site. Both scripts are async and deferred so will load after everything else has loaded.
+## Features
 
-### Simple
-Initiates Bento and triggers `bento.view()`. Good for most websites that don't need much customization.
-```js
+* **Simple event tracking**: We make it easy for you to track user events and behavior in your application.
+* **Visitor identification**: Identify your visitors to associate events with specific users.
+* **Custom fields**: Track and update custom fields for your visitors to store additional data.
+* **Purchase tracking**: Monitor customer purchases and calculate lifetime value (LTV) for your subscribers.
+* **Chat integration**: Easily integrate and control Bento's chat functionality in your application.
+* **Spam checking**: Validate email addresses to ensure data quality.
+* **Subdomain tracking**: Track visitors across multiple subdomains of your website.
+
+## Requirements
+
+The Bento JavaScript SDK can be used in any modern web browser.
+
+Bento Account for a valid **SITE_UUID**.
+
+## Getting started
+
+### Installation
+
+Add one of the following scripts to your website's header or footer:
+
+#### Simple Installation
+
+```html
 <script src="https://fast.bentonow.com?site_uuid={Site Key}" async defer></script>
 ```
 
-### Advanced
-Loads Bento.js and fires off an event (`bento:ready`) that you can listen for. 
-```js
+#### Advanced Installation
+
+```html
 <script src="https://app.bentonow.com/{Site Key}.js" async defer></script>
 <script>
 window.addEventListener("bento:ready", function () {
   if (typeof(bento$) != 'undefined') {
     bento$(function() {
-        // bento.showChat();
         bento.view();
     });
   }
 })
 </script>
 ```
-_Note: {Site Key} will automatically be replaced on the script page. Do not copy and paste the above verbatim_. 
 
-## Identify
+Replace `{Site Key}` with your actual Bento site key.
 
-In Bento, all new visitors are anonymous. If you'd like to identify a visitor, simply run the following command _before_ you track an event or pageview.
+## Modules
 
-```js
-bento.identify("example@example.com");
+### Visitor Identification
+
+Identify a visitor:
+
+```javascript
+bento.identify("user@example.com");
 ```
 
-After you do so, all future events sent from this users device will be correctly identified as that person. Worth mentioning that all previous events sent from that visitors device will also be associated to that user. Magic, right?
+Identify a user for chat only:
 
-# Identify (Chat Only)
-
-In Bento, if you wish to identify a user in chat (not requiring self-identification) then you can use the following method. It requires both an email AND an identifier (like a user_id or account_id in your database).
-
-```js
+```javascript
 window.addEventListener('bentochat:ready', function() {
-    window.$bentoChat.setUser('<identifier>', {
-        email: '<email>',
+    window.$bentoChat.setUser('user123', {
+        email: 'user@example.com',
         name: 'Jane Doe',
-        phone_number: ''
+        phone_number: '1234567890'
     });
-    console.log('running this')
 })
 ```
 
-## Update Fields
+### Custom Fields
 
-If you'd like to update a visitors custom field (first_name, last_name, status, etc) run the following command _before_ you track an event or pageview.
+Update visitor's custom fields:
 
-```js
-bento.updateFields({"first_name": "Ash", "last_name": "Ketchum"});
+```javascript
+bento.updateFields({
+    "first_name": "Ash", 
+    "last_name": "Ketchum"
+});
 ```
 
-This will send their fields inside the event and update the visitor.
+### Event Tracking
 
-## Track (Create Event)
+Track a custom event:
 
-The following will build an event with a custom type/name and a details payload that you can filter by in Workflows. 
-
-```js
+```javascript
 bento.track("optin", {"organisation_name": "Team Rocket"});
-bento.track("demo");
-bento.track("download");
 ```
 
-## Track Purchase (Create Unique Events)
+Track a purchase:
 
-The following will track a purchase and increase/decrease the LTV of a customer. Note that the `key` stops duplicate values being tracked, this is important if you're loading this script on a thank you page and it loads multiple times. Cool, huh?
-
-```js
+```javascript
 bento.track("purchase", {
   unique: {
-    key: "INV1234", // a unique key — this stops duplicate unique events
+    key: "INV1234",
   },
   value: {
     currency: "USD",
-    amount: 1000, // in cents
+    amount: 1000,
   },
   cart: {
-    items: [ // an array of items, can be any format
+    items: [
       {
         product_name: "Product 1",
         product_id: "1234",
@@ -107,55 +133,64 @@ bento.track("purchase", {
 });
 ```
 
-## Tag
+### Tagging
 
-Fires an event with a tag inside. This can trigger automations.
+Add a tag to a visitor:
 
-```js
+```javascript
 bento.tag("demo_booked");
 ```
 
-## Chat
+### Chat Integration
 
-```js
-// Renders or hides chat bubble.
+Show or hide chat:
+
+```javascript
 bento.showChat();
 bento.hideChat();
+```
 
-// Opens or closes the chat window.
+Open or close chat window:
+
+```javascript
 bento.openChat();
 bento.closeChat();
-
 ```
 
-## Get Email
+### Utility Functions
 
-If you have identified the device _at least once_ during the session you can fetch that information for your own use. This will usually be available if someone has logged in, opted in via Bento Capture, or used a form on your site.
+Get visitor's email:
 
-```js
-bento.getEmail()
+```javascript
+const email = bento.getEmail();
 ```
 
-## Spam Check
+Check if an email is spam:
 
-Got an important piece of content behind an opt-in and don't want your users putting fake emails in to get it? Leverage Bento's Spam API to ensure their email is correct before proceeding. NOTE: This _does not_ check MX records as that _can_ be super slow. 
-
-```js
-await bento.spamCheck(email)
+```javascript
+const isSpam = await bento.spamCheck(email);
 ```
 
-## [DEPRECATED] Autofill
+### Subdomain Tracking
 
-This fetches the visitors details (email and whitelisted fields) and automatically fills out all forms on the page.
+Track visitors across subdomains:
 
-```js
-bento.autofill();
+```javascript
+bento.trackSubdomains(['example.com', 'test.example.com']);
 ```
 
-## [BETA] Track Subdomains
+## Things to Know
 
-If you have traffic going to multiple subdomains and wish to track people throughout that journey simply run the following at least once per pageview. We will attempt to add the visitors identifier to each link. Please test this thoroughly before going live.
+1. All events are initially anonymous until a visitor is identified.
+2. The `identify` method associates all previous and future events from a device with the provided email.
+3. Custom fields should be updated before tracking an event or page-view.
+4. The `unique.key` in purchase tracking prevents duplicate tracking of the same purchase.
+5. Subdomain tracking is currently in beta and should be thoroughly tested before use in production.
 
-```js
-bento.trackSubdomains(['example.com', 'test.example.com'])
-```
+## Contributing
+
+We welcome contributions! Please see our [contributing guidelines](CODE_OF_CONDUCT.md) for details on how to submit pull requests, report issues, and suggest improvements.
+
+## License
+
+The Bento SDK for javascript is available as open source under the terms of the [MIT License](LICENSE.md).
